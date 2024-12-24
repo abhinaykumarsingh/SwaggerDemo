@@ -1,0 +1,91 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Weather Forecast API",
+      "version": "1.0.0",
+      "description": "A demo API for fetching weather forecasts for a given city."
+    },
+    "servers": [
+      {
+        "url": "https://api.example.com/v1",
+        "description": "Production server"
+      }
+    ],
+    "paths": {
+      "/weather": {
+        "get": {
+          "summary": "Get Weather Forecast",
+          "description": "Fetch the weather forecast for a specific city.",
+          "parameters": [
+            {
+              "name": "city",
+              "in": "query",
+              "description": "The name of the city to fetch the forecast for.",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "units",
+              "in": "query",
+              "description": "The units of measurement. Default is metric.",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "enum": ["metric", "imperial"],
+                "default": "metric"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "city": {
+                        "type": "string",
+                        "example": "London"
+                      },
+                      "temperature": {
+                        "type": "number",
+                        "example": 15.5
+                      },
+                      "unit": {
+                        "type": "string",
+                        "example": "metric"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "Partly cloudy"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "error": {
+                        "type": "string",
+                        "example": "City parameter is required."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
