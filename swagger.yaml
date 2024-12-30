@@ -1,0 +1,132 @@
+openapi: 3.0.3
+info:
+  title: httpbin API
+  description: A simple HTTP request and response service.
+  version: 1.0.0
+servers:
+  - url: https://httpbin.org
+    description: Main server
+paths:
+  /get:
+    get:
+      summary: Returns GET data
+      description: Returns the query parameters and headers of the GET request.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  args:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  origin:
+                    type: string
+                  url:
+                    type: string
+  /post:
+    post:
+      summary: Returns POST data
+      description: Returns the form parameters, JSON payload, and headers of the POST request.
+      requestBody:
+        description: Optional payload for the POST request.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  args:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  data:
+                    type: string
+                  files:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  form:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  json:
+                    type: object
+                    additionalProperties:
+                      type: string
+                  origin:
+                    type: string
+                  url:
+                    type: string
+  /status/{code}:
+    get:
+      summary: Returns a custom status code
+      description: Returns a response with the specified HTTP status code.
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: The HTTP status code to return.
+          schema:
+            type: integer
+            format: int32
+            minimum: 100
+            maximum: 599
+      responses:
+        'default':
+          description: A response with the specified status code.
+  /ip:
+    get:
+      summary: Returns the origin IP address
+      description: Returns the IP address of the client making the request.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  origin:
+                    type: string
+  /headers:
+    get:
+      summary: Returns the request headers
+      description: Returns the headers sent in the request.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: string
